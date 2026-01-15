@@ -1,17 +1,24 @@
 // DayPrism Landing Page Animations
 // Using GSAP ScrollTrigger for scroll-driven animations
 
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 // Check for reduced motion preference
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Check if mobile (simplified animation)
+// Check if mobile
 const isMobile = window.innerWidth < 768;
 
 if (!prefersReducedMotion && !isMobile) {
     initScrollAnimations();
+} else if (isMobile) {
+    // On mobile, just show everything
+    document.querySelectorAll('.source-icon').forEach(el => el.style.opacity = '1');
+    document.querySelector('.prism-container').style.opacity = '1';
+    document.querySelectorAll('.output-card').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+    });
 }
 
 function initScrollAnimations() {
@@ -19,113 +26,65 @@ function initScrollAnimations() {
     const prismContainer = document.querySelector('.prism-container');
     const outputs = document.querySelectorAll('.output-card');
 
-    // Get prism position for convergence target
-    const prismRect = prismContainer.getBoundingClientRect();
-    const prismCenterY = window.innerHeight * 0.38; // Match CSS top: 38%
-
-    // Create the main timeline
-    const tl = gsap.timeline({
+    // Create main timeline pinned to the animation section
+    const mainTimeline = gsap.timeline({
         scrollTrigger: {
             trigger: '.animation-section',
-            start: 'top 80%', // Start animation earlier - when section is 80% from top
+            start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.5,
-            pin: '.animation-container',
-            pinSpacing: false,
+            scrub: 1,
         }
     });
 
-    // Phase 1: Sources appear quickly (0% - 15%)
-    sources.forEach((source, index) => {
-        const delay = index * 0.01; // Faster stagger
-        tl.fromTo(source,
-            {
-                opacity: 0,
-                scale: 0.5,
-                y: -30
-            },
-            {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.08,
-                ease: 'back.out(1.5)'
-            },
-            delay
-        );
+    // Phase 1: Sources fade in (0% - 20% of scroll)
+    // All sources appear at once, staggered
+    sources.forEach((source, i) => {
+        mainTimeline.to(source, {
+            opacity: 1,
+            duration: 0.15,
+            ease: 'power2.out'
+        }, i * 0.01);
     });
 
-    // Phase 2: Sources converge DOWN to prism (15% - 40%)
-    sources.forEach((source, index) => {
+    // Phase 2: Sources move toward center and fade out (20% - 45%)
+    const prismCenterX = window.innerWidth / 2;
+    const prismCenterY = window.innerHeight * 0.45;
+
+    sources.forEach((source, i) => {
         const rect = source.getBoundingClientRect();
-        const sourceX = rect.left + rect.width / 2;
-        const sourceY = rect.top + rect.height / 2;
+        const startX = rect.left + rect.width / 2;
+        const startY = rect.top + rect.height / 2;
 
-        // Target is center of screen horizontally, and prism position vertically
-        const targetX = window.innerWidth / 2;
-        const targetY = prismCenterY;
-
-        tl.to(source, {
-            x: targetX - sourceX,
-            y: targetY - sourceY,
-            scale: 0.2,
+        mainTimeline.to(source, {
+            x: prismCenterX - startX,
+            y: prismCenterY - startY,
+            scale: 0.3,
             opacity: 0,
             duration: 0.25,
             ease: 'power2.in'
-        }, 0.15 + index * 0.01);
+        }, 0.2 + i * 0.008);
     });
 
-    // Phase 3: Prism appears (35% - 45%)
-    tl.to(prismContainer, {
+    // Phase 3: Prism appears (40% - 50%)
+    mainTimeline.to(prismContainer, {
         opacity: 1,
-        scale: 1,
-        duration: 0.12,
-        ease: 'back.out(2)'
-    }, 0.35);
-
-    // Prism glow pulse
-    tl.to('.prism-glow', {
-        scale: 1.3,
-        opacity: 1,
-        duration: 0.1,
+        duration: 0.15,
         ease: 'power2.out'
-    }, 0.38);
+    }, 0.4);
 
-    // Phase 4: Output cards emerge from below prism (45% - 75%)
-    outputs.forEach((card, index) => {
-        const delay = 0.45 + index * 0.025;
-
-        tl.fromTo(card,
-            {
-                opacity: 0,
-                y: 30
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.08,
-                ease: 'back.out(1.5)'
-            },
-            delay
-        );
+    // Phase 4: Output cards appear (50% - 80%)
+    outputs.forEach((card, i) => {
+        mainTimeline.to(card, {
+            opacity: 1,
+            y: 0,
+            duration: 0.1,
+            ease: 'power2.out'
+        }, 0.5 + i * 0.025);
     });
 
-    // Hold the final state (75% - 100%)
-    tl.to({}, { duration: 0.25 });
+    // Hold the final state (80% - 100%)
+    mainTimeline.to({}, { duration: 0.2 });
 }
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    });
-});
 
 // Button hover effects
 document.querySelectorAll('.cta-button').forEach(button => {
@@ -171,17 +130,16 @@ if (!isMobile) {
     });
 }
 
-// Resize handler for responsive behavior
-let resizeTimeout;
+// Handle resize
+let resizeTimer;
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        // Refresh ScrollTrigger on resize
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
         ScrollTrigger.refresh();
     }, 250);
 });
 
-// Performance: Pause animations when tab is not visible
+// Pause when not visible
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
         gsap.globalTimeline.pause();

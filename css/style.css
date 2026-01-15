@@ -157,9 +157,9 @@ body {
     60% { transform: translateY(5px); }
 }
 
-/* Animation Section */
+/* Animation Section - simple vertical flow */
 .animation-section {
-    min-height: 200vh;
+    min-height: 250vh;
     position: relative;
 }
 
@@ -167,28 +167,26 @@ body {
     position: sticky;
     top: 0;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    width: 100%;
     overflow: hidden;
-    padding-top: 5vh;
 }
 
-/* Source Icons - positioned in top area */
+/* Source Icons - spread across top portion */
 .sources {
     position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 900px;
-    height: 25vh;
-    pointer-events: none;
+    top: 8%;
+    left: 0;
+    right: 0;
+    height: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 10%;
 }
 
 .source-icon {
-    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -208,31 +206,12 @@ body {
     font-weight: 500;
 }
 
-/* Source positions - arranged in rows at top */
-/* Row 1 - 4 icons */
-.source-icon[data-delay="0"] { left: 10%; top: 10%; }
-.source-icon[data-delay="1"] { left: 35%; top: 5%; }
-.source-icon[data-delay="2"] { left: 60%; top: 8%; }
-.source-icon[data-delay="3"] { left: 85%; top: 12%; }
-
-/* Row 2 - 4 icons */
-.source-icon[data-delay="4"] { left: 5%; top: 45%; }
-.source-icon[data-delay="5"] { left: 28%; top: 50%; }
-.source-icon[data-delay="6"] { left: 52%; top: 48%; }
-.source-icon[data-delay="7"] { left: 75%; top: 52%; }
-
-/* Row 3 - 4 icons */
-.source-icon[data-delay="8"] { left: 15%; top: 80%; }
-.source-icon[data-delay="9"] { left: 40%; top: 85%; }
-.source-icon[data-delay="10"] { left: 62%; top: 82%; }
-.source-icon[data-delay="11"] { left: 88%; top: 78%; }
-
-/* Prism - centered vertically */
+/* Prism - fixed center position */
 .prism-container {
     position: absolute;
-    top: 38%;
+    top: 45%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -254,18 +233,12 @@ body {
     background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%);
     border-radius: 50%;
     filter: blur(25px);
-    animation: pulse 3s ease-in-out infinite;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.2); opacity: 0.9; }
-}
-
-/* Output Cards - grid below prism */
+/* Output Cards - grid in bottom portion */
 .outputs {
     position: absolute;
-    top: 55%;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -273,19 +246,15 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    pointer-events: none;
 }
 
 .output-card {
-    position: relative;
-    width: 100%;
     padding: 1rem;
     background: var(--bg-secondary);
     border: 1px solid var(--text-quaternary);
     border-radius: 12px;
     opacity: 0;
-    transform: translateY(30px);
-    pointer-events: auto;
+    transform: translateY(20px);
     transition: all 0.3s ease;
 }
 
@@ -329,6 +298,9 @@ body {
     align-items: center;
     text-align: center;
     padding: 4rem 2rem;
+    position: relative;
+    z-index: 20;
+    background: var(--bg-primary);
 }
 
 .privacy-box {
@@ -371,6 +343,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 3rem 2rem;
+    background: var(--bg-primary);
 }
 
 .footer-wordmark {
@@ -390,7 +363,6 @@ body {
     .outputs {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
-        top: 58%;
     }
 
     .output-card {
@@ -433,39 +405,30 @@ body {
         display: none;
     }
 
-    /* Simplified mobile animation */
+    /* Simplified mobile - no animation */
     .animation-section {
         min-height: auto;
-        padding: 4rem 1rem;
+        padding: 3rem 1rem;
     }
 
     .animation-container {
         position: relative;
         height: auto;
+        display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 2rem;
-        padding-top: 0;
     }
 
     .sources {
         position: relative;
         top: auto;
-        left: auto;
-        transform: none;
-        width: 100%;
         height: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         gap: 1.25rem;
-        padding: 1.5rem;
+        padding: 1rem;
     }
 
     .source-icon {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        transform: none !important;
         opacity: 1;
     }
 
@@ -482,7 +445,7 @@ body {
         position: relative;
         top: auto;
         left: auto;
-        transform: scale(1);
+        transform: none;
         opacity: 1;
         margin: 1.5rem 0;
     }
@@ -494,13 +457,12 @@ body {
 
     .outputs {
         position: relative;
-        top: auto;
+        bottom: auto;
         left: auto;
         transform: none;
         width: 100%;
         grid-template-columns: 1fr;
         gap: 0.75rem;
-        padding: 0;
     }
 
     .output-card {
@@ -533,10 +495,6 @@ body {
     }
 
     .scroll-indicator {
-        animation: none;
-    }
-
-    .prism-glow {
         animation: none;
     }
 
