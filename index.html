@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DayPrism - AI-Powered Personal Intelligence for Mac</title>
+    <meta name="description" content="Start every day knowing exactly what matters. AI briefings from email, calendar, messages, and meetings—delivered before you wake up.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/dayprism_transparent.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="assets/dayprism_transparent.png" alt="DayPrism" class="hero-logo">
+            <h1 class="hero-wordmark">DayPrism</h1>
+            <h2 class="hero-headline">Start every day knowing exactly what matters.</h2>
+            <p class="hero-subhead">Your AI briefings from email, calendar, messages, and meetings—<br>delivered to your inbox before you wake up.</p>
+            <a href="https://github.com/satyangajwani/dayprism/releases/latest" class="cta-button">
+                <svg class="apple-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                Download for Mac
+            </a>
+            <p class="system-req">macOS 12+ required</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Animation Section -->
+    <section class="animation-section">
+        <div class="animation-container">
+            <!-- Sources (scattered icons) -->
+            <div class="sources">
+                <div class="source-icon" data-delay="0">
+                    <svg viewBox="0 0 24 24" fill="#EA4335"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>Gmail</span>
+                </div>
+                <div class="source-icon" data-delay="1">
+                    <svg viewBox="0 0 24 24" fill="#4285F4"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                    <span>Calendar</span>
+                </div>
+                <div class="source-icon" data-delay="2">
+                    <svg viewBox="0 0 24 24" fill="#611f69"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+                    <span>Slack</span>
+                </div>
+                <div class="source-icon" data-delay="3">
+                    <svg viewBox="0 0 24 24" fill="#34C759"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                    <span>iMessage</span>
+                </div>
+                <div class="source-icon" data-delay="4">
+                    <svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="source-icon" data-delay="5">
+                    <svg viewBox="0 0 24 24" fill="#000"><path d="M4.5 3h15A1.5 1.5 0 0121 4.5v15a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 19.5v-15A1.5 1.5 0 014.5 3zm.75 3.75v10.5h13.5V6.75H5.25zm1.5 1.5h3v3h-3v-3zm4.5 0h4.5v1.5h-4.5v-1.5zm0 3h4.5v1.5h-4.5v-1.5zm-4.5 3h10.5v1.5H6.75v-1.5z"/></svg>
+                    <span>Notion</span>
+                </div>
+                <div class="source-icon" data-delay="6">
+                    <svg viewBox="0 0 24 24" fill="#0078D4"><path d="M21.17 2.06A2.06 2.06 0 0019.11 0H4.89a2.06 2.06 0 00-2.06 2.06V22h18.34V2.06zM12 20.5a8.5 8.5 0 110-17 8.5 8.5 0 010 17z"/></svg>
+                    <span>Outlook</span>
+                </div>
+                <div class="source-icon" data-delay="7">
+                    <svg viewBox="0 0 24 24" fill="#6366F1"><circle cx="12" cy="12" r="10"/><path fill="#fff" d="M8 8h8v2H8zM8 12h8v2H8zM8 16h5v2H8z"/></svg>
+                    <span>Granola</span>
+                </div>
+                <div class="source-icon" data-delay="8">
+                    <svg viewBox="0 0 24 24" fill="#4285F4"><path d="M14.727 6.727H14V0H4.91c-.905 0-1.637.732-1.637 1.636v20.728c0 .904.732 1.636 1.636 1.636h14.182c.904 0 1.636-.732 1.636-1.636V6.727h-6zm-.545 10.455H7.09v-1.637h7.09v1.637zm2.727-3.273H7.091v-1.636h9.818v1.636zm0-3.272H7.091V9.h9.818v1.637zM14.727 6h6l-6-6v6z"/></svg>
+                    <span>Google Docs</span>
+                </div>
+                <div class="source-icon" data-delay="9">
+                    <svg viewBox="0 0 24 24" fill="#3D5AFE"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <span>Otter.ai</span>
+                </div>
+                <div class="source-icon" data-delay="10">
+                    <svg viewBox="0 0 24 24" fill="#5E6AD2"><path d="M3 3h18v18H3V3zm16.5 16.5v-15h-15v15h15zM6.75 17.25l3-4.5 2.25 3 3-4.5 3.75 6H6.75z"/></svg>
+                    <span>Linear</span>
+                </div>
+                <div class="source-icon" data-delay="11">
+                    <svg viewBox="0 0 24 24" fill="#F24E1E"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zM8.148 24c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v4.49c0 2.476-2.014 4.49-4.588 4.49zm0-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019 3.019-1.355 3.019-3.019v-3.019H8.148zM8.148 8.981c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981H8.148zm0-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V1.471H8.148zM8.148 15.02c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.981H8.148v-.001zm0-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V7.511H8.148zM19.852 15.02h-4.588V6.039h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zm-3.117-1.471h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117v6.038z"/></svg>
+                    <span>Figma</span>
+                </div>
+            </div>
+
+            <!-- Central Prism -->
+            <div class="prism-container">
+                <img src="assets/dayprism_transparent.png" alt="DayPrism" class="prism-logo">
+                <div class="prism-glow"></div>
+            </div>
+
+            <!-- Output Cards -->
+            <div class="outputs">
+                <div class="output-card" data-position="top-left">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#8B5CF6"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                    </div>
+                    <h3>Daily Briefing</h3>
+                    <p>3 urgent emails, 2 meetings today, 1 follow-up due...</p>
+                </div>
+                <div class="output-card" data-position="top-right">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#3B82F6"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                    </div>
+                    <h3>Weekly Summary</h3>
+                    <p>5 active projects, 12 pending threads, 3 decisions needed...</p>
+                </div>
+                <div class="output-card" data-position="left">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#06B6D4"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <h3>Follow-ups Due</h3>
+                    <p>2 emails awaiting reply, 1 commitment due Thursday...</p>
+                </div>
+                <div class="output-card" data-position="right">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h3>Lighten the Load</h3>
+                    <p>3 items to delegate, 2 to defer, 1 to drop...</p>
+                </div>
+                <div class="output-card" data-position="bottom-left">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#EC4899"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                    </div>
+                    <h3>Topic Study</h3>
+                    <p>Deep dive into any subject across all your data...</p>
+                </div>
+                <div class="output-card" data-position="bottom-right">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#10B981"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                    </div>
+                    <h3>Meeting Prep</h3>
+                    <p>Context on attendees, past discussions, open items...</p>
+                </div>
+                <div class="output-card" data-position="far-left">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#6366F1"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <h3>Person 360</h3>
+                    <p>Last contact: 2 days ago. 47 touchpoints over 6 months...</p>
+                </div>
+                <div class="output-card" data-position="far-right">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="#F43F5E"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+                    </div>
+                    <h3>Ask Anything</h3>
+                    <p>Natural language questions across all your sources...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <a href="https://github.com/satyangajwani/dayprism/releases/latest" class="cta-button large">
+            <svg class="apple-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            Download for Mac
+        </a>
+        <p class="system-req">macOS 12+ required · Apple Silicon optimized</p>
+
+        <div class="privacy-box">
+            <div class="privacy-icon">
+                <svg viewBox="0 0 24 24" fill="#8B5CF6">
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                </svg>
+            </div>
+            <div class="privacy-text">
+                <p><strong>Your data stays on your Mac.</strong></p>
+                <p>AI processing uses your own API keys.<br>Nothing is sent to DayPrism servers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span class="footer-wordmark">DayPrism</span>
+        <span class="footer-copyright">© 2026 · Made in SF</span>
+    </footer>
+
+    <script src="js/animations.js"></script>
+</body>
+</html>
