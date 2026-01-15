@@ -17,100 +17,101 @@ if (!prefersReducedMotion && !isMobile) {
 function initScrollAnimations() {
     const sources = document.querySelectorAll('.source-icon');
     const prismContainer = document.querySelector('.prism-container');
-    const prismLogo = document.querySelector('.prism-logo');
     const outputs = document.querySelectorAll('.output-card');
-    const animationContainer = document.querySelector('.animation-container');
+
+    // Get prism position for convergence target
+    const prismRect = prismContainer.getBoundingClientRect();
+    const prismCenterY = window.innerHeight * 0.38; // Match CSS top: 38%
 
     // Create the main timeline
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.animation-section',
-            start: 'top top',
+            start: 'top 80%', // Start animation earlier - when section is 80% from top
             end: 'bottom bottom',
-            scrub: 1,
+            scrub: 0.5,
             pin: '.animation-container',
             pinSpacing: false,
         }
     });
 
-    // Phase 1: Sources appear scattered (0% - 20%)
+    // Phase 1: Sources appear quickly (0% - 15%)
     sources.forEach((source, index) => {
-        const delay = index * 0.03;
+        const delay = index * 0.01; // Faster stagger
         tl.fromTo(source,
             {
                 opacity: 0,
                 scale: 0.5,
-                y: 50
+                y: -30
             },
             {
                 opacity: 1,
                 scale: 1,
                 y: 0,
-                duration: 0.15,
-                ease: 'back.out(1.7)'
+                duration: 0.08,
+                ease: 'back.out(1.5)'
             },
             delay
         );
     });
 
-    // Phase 2: Sources converge to center (20% - 50%)
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
+    // Phase 2: Sources converge DOWN to prism (15% - 40%)
     sources.forEach((source, index) => {
         const rect = source.getBoundingClientRect();
         const sourceX = rect.left + rect.width / 2;
         const sourceY = rect.top + rect.height / 2;
 
+        // Target is center of screen horizontally, and prism position vertically
+        const targetX = window.innerWidth / 2;
+        const targetY = prismCenterY;
+
         tl.to(source, {
-            x: centerX - sourceX,
-            y: centerY - sourceY,
-            scale: 0.3,
+            x: targetX - sourceX,
+            y: targetY - sourceY,
+            scale: 0.2,
             opacity: 0,
-            duration: 0.4,
+            duration: 0.25,
             ease: 'power2.in'
-        }, 0.5 + index * 0.02);
+        }, 0.15 + index * 0.01);
     });
 
-    // Phase 3: Prism appears (45% - 55%)
+    // Phase 3: Prism appears (35% - 45%)
     tl.to(prismContainer, {
         opacity: 1,
         scale: 1,
-        duration: 0.2,
+        duration: 0.12,
         ease: 'back.out(2)'
-    }, 0.7);
+    }, 0.35);
 
     // Prism glow pulse
     tl.to('.prism-glow', {
-        scale: 1.5,
+        scale: 1.3,
         opacity: 1,
-        duration: 0.15,
+        duration: 0.1,
         ease: 'power2.out'
-    }, 0.75);
+    }, 0.38);
 
-    // Phase 4: Output cards emerge (55% - 100%)
+    // Phase 4: Output cards emerge from below prism (45% - 75%)
     outputs.forEach((card, index) => {
-        const delay = 0.8 + index * 0.03;
+        const delay = 0.45 + index * 0.025;
 
-        tl.to(card, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.15,
-            ease: 'back.out(1.7)'
-        }, delay);
+        tl.fromTo(card,
+            {
+                opacity: 0,
+                y: 30
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.08,
+                ease: 'back.out(1.5)'
+            },
+            delay
+        );
     });
 
-    // Add subtle parallax to source icons during hover/idle
-    sources.forEach(source => {
-        gsap.to(source, {
-            y: '+=10',
-            x: '+=5',
-            duration: 2 + Math.random() * 2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut'
-        });
-    });
+    // Hold the final state (75% - 100%)
+    tl.to({}, { duration: 0.25 });
 }
 
 // Smooth scroll for anchor links
