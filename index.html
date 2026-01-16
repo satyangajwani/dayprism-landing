@@ -9,10 +9,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/dayprism_transparent.png">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts - Clash Display + Satoshi from Fontshare -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
@@ -130,8 +129,9 @@
 
             <!-- Central Prism -->
             <div class="prism-container">
-                <img src="assets/dayprism_transparent.png" alt="DayPrism" class="prism-logo">
+                <div class="prism-rays"></div>
                 <div class="prism-glow"></div>
+                <img src="assets/dayprism_transparent.png" alt="DayPrism" class="prism-logo">
             </div>
 
             <!-- Output Cards -->
@@ -192,6 +192,77 @@
                     <h3>Ask Anything</h3>
                     <p>Natural language questions across all your sources...</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- Animation Progress Indicator -->
+        <div class="animation-progress">
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-labels">
+                <span class="progress-label active" data-phase="sources">Sources</span>
+                <span class="progress-label" data-phase="prism">Processing</span>
+                <span class="progress-label" data-phase="outputs">Insights</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <h2 class="social-proof-heading">Trusted by professionals who value their time</h2>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"DayPrism transformed my morning routine. I now start each day with crystal clarity on what matters."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div class="author-info">
+                        <span class="author-name">James D.</span>
+                        <span class="author-title">Product Manager</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"Finally, an AI tool that respects my privacy. All my data stays local and I control the keys."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SK</div>
+                    <div class="author-info">
+                        <span class="author-name">Sarah K.</span>
+                        <span class="author-title">Software Engineer</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"The meeting prep feature alone saves me hours each week. I walk into every call fully prepared."</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div class="author-info">
+                        <span class="author-name">Michael R.</span>
+                        <span class="author-title">Startup Founder</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat">
+                <span class="stat-number">2.5hrs</span>
+                <span class="stat-label">Saved per week on average</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">12+</span>
+                <span class="stat-label">Integrations supported</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Private & local processing</span>
             </div>
         </div>
     </section>

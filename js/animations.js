@@ -1,5 +1,5 @@
-// DayPrism Landing Page Animations
-// Smooth visual: Sources converge with trails, cards emerge with trails
+// DayPrism Landing Page Animations - Bold Maximalist
+// Smooth visual: Sources converge with prismatic trails, cards emerge with trails
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +19,8 @@ function initAnimations() {
     const prism = document.querySelector('.prism-container');
     const cards = document.querySelectorAll('.output-card');
     const animationContainer = document.querySelector('.animation-container');
+    const progressFill = document.querySelector('.progress-fill');
+    const progressLabels = document.querySelectorAll('.progress-label');
 
     if (!prism || !animationContainer) return;
 
@@ -43,6 +45,45 @@ function initAnimations() {
     animationContainer.appendChild(trailSvg);
 
     // ============================================
+    // MULTI-COLOR GRADIENT DEFINITIONS
+    // ============================================
+    const defs = document.createElementNS(svgNS, 'defs');
+
+    // Prismatic trail colors
+    const trailColors = [
+        { id: 'trailViolet', color: '#8B5CF6' },
+        { id: 'trailBlue', color: '#3B82F6' },
+        { id: 'trailCyan', color: '#06B6D4' },
+        { id: 'trailTeal', color: '#14B8A6' },
+        { id: 'trailGold', color: '#F59E0B' },
+        { id: 'trailOrange', color: '#F97316' },
+        { id: 'trailPink', color: '#EC4899' },
+        { id: 'trailMagenta', color: '#D946EF' }
+    ];
+
+    // Create gradient for each color (incoming - source to center)
+    trailColors.forEach(({ id, color }) => {
+        const gradIn = document.createElementNS(svgNS, 'linearGradient');
+        gradIn.setAttribute('id', `${id}In`);
+        gradIn.innerHTML = `
+            <stop offset="0%" stop-color="${color}" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+        `;
+        defs.appendChild(gradIn);
+
+        // Outgoing gradient (center to card)
+        const gradOut = document.createElementNS(svgNS, 'linearGradient');
+        gradOut.setAttribute('id', `${id}Out`);
+        gradOut.innerHTML = `
+            <stop offset="0%" stop-color="${color}" stop-opacity="0"/>
+            <stop offset="100%" stop-color="${color}" stop-opacity="0.8"/>
+        `;
+        defs.appendChild(gradOut);
+    });
+
+    trailSvg.insertBefore(defs, trailSvg.firstChild);
+
+    // ============================================
     // SOURCES: Position in circle around prism
     // ============================================
     const sourceRadius = 230;
@@ -63,13 +104,14 @@ function initAnimations() {
             scale: 1
         });
 
-        // Create trail line for each source
+        // Create trail line with unique color
+        const colorIndex = i % trailColors.length;
         const line = document.createElementNS(svgNS, 'line');
         line.setAttribute('x1', x);
         line.setAttribute('y1', y);
         line.setAttribute('x2', centerX);
         line.setAttribute('y2', centerY);
-        line.setAttribute('stroke', 'url(#trailGradientIn)');
+        line.setAttribute('stroke', `url(#${trailColors[colorIndex].id}In)`);
         line.setAttribute('stroke-width', '2');
         line.setAttribute('stroke-linecap', 'round');
         line.setAttribute('opacity', '0');
@@ -81,11 +123,11 @@ function initAnimations() {
     // ============================================
     // CARDS: Final positions in 2 rows
     // ============================================
-    const cardWidth = 240;
-    const cardHeight = 110;
+    const cardWidth = 260; // Updated for new card size
+    const cardHeight = 120;
     const cardGap = 16;
     const row1Y = centerY + 120;
-    const row2Y = centerY + 260;
+    const row2Y = centerY + 270;
     const totalRowWidth = 4 * cardWidth + 3 * cardGap;
     const startX = centerX - totalRowWidth / 2;
 
@@ -114,13 +156,14 @@ function initAnimations() {
             scale: 0.1
         });
 
-        // Create trail line for each card
+        // Create trail line with unique color
+        const colorIndex = i % trailColors.length;
         const line = document.createElementNS(svgNS, 'line');
         line.setAttribute('x1', centerX);
         line.setAttribute('y1', centerY);
         line.setAttribute('x2', centerX);
         line.setAttribute('y2', centerY);
-        line.setAttribute('stroke', 'url(#trailGradientOut)');
+        line.setAttribute('stroke', `url(#${trailColors[colorIndex].id}Out)`);
         line.setAttribute('stroke-width', '2');
         line.setAttribute('stroke-linecap', 'round');
         line.setAttribute('opacity', '0');
@@ -129,41 +172,54 @@ function initAnimations() {
         card._trailLine = line;
     });
 
-    // Add gradient definitions
-    const defs = document.createElementNS(svgNS, 'defs');
-
-    // Gradient for incoming trails (source to center)
-    const gradIn = document.createElementNS(svgNS, 'linearGradient');
-    gradIn.setAttribute('id', 'trailGradientIn');
-    gradIn.innerHTML = `
-        <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8"/>
-        <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
-    `;
-    defs.appendChild(gradIn);
-
-    // Gradient for outgoing trails (center to card)
-    const gradOut = document.createElementNS(svgNS, 'linearGradient');
-    gradOut.setAttribute('id', 'trailGradientOut');
-    gradOut.innerHTML = `
-        <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0"/>
-        <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.8"/>
-    `;
-    defs.appendChild(gradOut);
-
-    trailSvg.insertBefore(defs, trailSvg.firstChild);
-
     // Prism starts smaller
     gsap.set(prism, { opacity: 0.3, scale: 0.8 });
 
     // ============================================
-    // ANIMATION TIMELINE - SLOWER & SMOOTHER
+    // ANIMATION TIMELINE - TIGHTER & SMOOTHER
     // ============================================
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.animation-section',
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 1.5, // Much smoother/slower scrub
+            scrub: 1.2, // Slightly faster scrub
+            onEnter: () => document.body.classList.add('animation-active'),
+            onLeave: () => document.body.classList.remove('animation-active'),
+            onEnterBack: () => document.body.classList.add('animation-active'),
+            onLeaveBack: () => document.body.classList.remove('animation-active'),
+            onUpdate: (self) => {
+                // Update progress indicator
+                const progress = self.progress * 100;
+                if (progressFill) {
+                    progressFill.style.width = `${progress}%`;
+                }
+
+                // Update phase labels
+                if (progressLabels.length) {
+                    progressLabels.forEach(label => {
+                        label.classList.remove('active', 'completed');
+                    });
+
+                    if (progress < 40) {
+                        progressLabels[0].classList.add('active');
+                    } else if (progress < 70) {
+                        progressLabels[0].classList.add('completed');
+                        progressLabels[1].classList.add('active');
+                    } else {
+                        progressLabels[0].classList.add('completed');
+                        progressLabels[1].classList.add('completed');
+                        progressLabels[2].classList.add('active');
+                    }
+                }
+
+                // Activate prism rays when prism is visible
+                if (progress > 10 && progress < 90) {
+                    prism.classList.add('active');
+                } else {
+                    prism.classList.remove('active');
+                }
+            }
         }
     });
 
@@ -175,16 +231,15 @@ function initAnimations() {
         ease: 'power2.out'
     }, 0);
 
-    // PHASE 2 (10-55%): Sources converge with trails - SLOWER
+    // PHASE 2 (8-50%): Sources converge with trails
     sources.forEach((source, i) => {
-        const startTime = 0.08 + i * 0.03;
+        const startTime = 0.08 + i * 0.025; // Tighter stagger
         const trailLine = source._trailLine;
-        const startPos = sourcePositions[i];
 
         // Show trail line first
         tl.to(trailLine, {
             attr: { opacity: 0.7 },
-            duration: 0.12,
+            duration: 0.10,
             ease: 'power1.in'
         }, startTime);
 
@@ -194,33 +249,33 @@ function initAnimations() {
             top: centerY - 30,
             scale: 0.3,
             opacity: 0.5,
-            duration: 0.35,
+            duration: 0.30,
             ease: 'power2.inOut'
-        }, startTime + 0.08);
+        }, startTime + 0.06);
 
-        // Shrink trail as source moves (update x1, y1 to follow source)
+        // Shrink trail as source moves
         tl.to(trailLine, {
             attr: {
                 x1: centerX,
                 y1: centerY,
                 opacity: 0
             },
-            duration: 0.30,
+            duration: 0.25,
             ease: 'power2.in'
-        }, startTime + 0.15);
+        }, startTime + 0.12);
 
         // Final fade out of source
         tl.to(source, {
             scale: 0,
             opacity: 0,
-            duration: 0.12,
+            duration: 0.10,
             ease: 'power2.in'
-        }, startTime + 0.35);
+        }, startTime + 0.30);
     });
 
-    // PHASE 3 (55-95%): Cards emerge with trails - SLOWER
+    // PHASE 3 (55-92%): Cards emerge with trails
     cards.forEach((card, i) => {
-        const startTime = 0.55 + i * 0.045;
+        const startTime = 0.55 + i * 0.04; // Tighter stagger
         const trailLine = card._trailLine;
         const finalX = card._finalCenterX;
         const finalY = card._finalCenterY;
@@ -232,7 +287,7 @@ function initAnimations() {
                 y2: finalY,
                 opacity: 0.7
             },
-            duration: 0.18,
+            duration: 0.15,
             ease: 'power2.out'
         }, startTime);
 
@@ -242,9 +297,9 @@ function initAnimations() {
             top: card._finalY,
             scale: 1,
             opacity: 1,
-            duration: 0.28,
+            duration: 0.24,
             ease: 'power2.out'
-        }, startTime + 0.08);
+        }, startTime + 0.06);
 
         // Trail fades as card arrives
         tl.to(trailLine, {
@@ -253,13 +308,13 @@ function initAnimations() {
                 y1: finalY,
                 opacity: 0
             },
-            duration: 0.20,
+            duration: 0.18,
             ease: 'power2.out'
-        }, startTime + 0.20);
+        }, startTime + 0.16);
     });
 
     // Hold at end
-    tl.to({}, { duration: 0.05 });
+    tl.to({}, { duration: 0.03 });
 }
 
 // Hover effects
@@ -268,26 +323,7 @@ document.querySelectorAll('.cta-button').forEach(btn => {
     btn.addEventListener('mouseleave', () => gsap.to(btn, { scale: 1, duration: 0.2 }));
 });
 
-if (!isMobile) {
-    document.querySelectorAll('.output-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            gsap.to(card, {
-                scale: 1.02,
-                boxShadow: '0 8px 30px rgba(139, 92, 246, 0.3)',
-                borderColor: '#8B5CF6',
-                duration: 0.2
-            });
-        });
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-                scale: 1,
-                boxShadow: 'none',
-                borderColor: '#48484A',
-                duration: 0.2
-            });
-        });
-    });
-}
+// Card hover effects handled by CSS now for glassmorphism
 
 // Resize
 let resizeTimeout;
@@ -298,4 +334,4 @@ window.addEventListener('resize', () => {
     }, 200);
 });
 
-console.log('DayPrism animations loaded v3');
+console.log('DayPrism animations loaded v4 - Bold Maximalist');

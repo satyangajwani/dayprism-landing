@@ -1,17 +1,27 @@
-/* DayPrism Landing Page Styles */
+/* DayPrism Landing Page Styles - Bold Maximalist */
 
 :root {
-    /* Brand Colors */
+    /* Prismatic Core Colors - extracted from logo */
     --prism-violet: #8B5CF6;
-    --prism-violet-dark: #7C3AED;
+    --prism-violet-deep: #7C3AED;
+    --prism-violet-light: #A78BFA;
     --prism-blue: #3B82F6;
+    --prism-blue-light: #60A5FA;
     --prism-cyan: #06B6D4;
+    --prism-cyan-light: #22D3EE;
+    --prism-teal: #14B8A6;
     --prism-gold: #F59E0B;
+    --prism-gold-light: #FBBF24;
+    --prism-orange: #F97316;
+    --prism-orange-light: #FB923C;
+    --prism-pink: #EC4899;
+    --prism-magenta: #D946EF;
 
-    /* Background Colors */
-    --bg-primary: #1C1C1E;
-    --bg-secondary: #2C2C2E;
-    --bg-tertiary: #3C3C3E;
+    /* Background Colors - deeper for contrast */
+    --bg-primary: #0A0A0B;
+    --bg-secondary: #141416;
+    --bg-tertiary: #1E1E21;
+    --bg-elevated: #242428;
 
     /* Text Colors */
     --text-primary: #F5F5F7;
@@ -19,9 +29,45 @@
     --text-tertiary: #636366;
     --text-quaternary: #48484A;
 
-    /* Fonts */
-    --font-brand: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Prismatic Gradients */
+    --gradient-prismatic: linear-gradient(
+        135deg,
+        var(--prism-violet) 0%,
+        var(--prism-blue) 25%,
+        var(--prism-cyan) 50%,
+        var(--prism-gold) 75%,
+        var(--prism-orange) 100%
+    );
+
+    --gradient-prismatic-reverse: linear-gradient(
+        135deg,
+        var(--prism-orange) 0%,
+        var(--prism-gold) 25%,
+        var(--prism-cyan) 50%,
+        var(--prism-blue) 75%,
+        var(--prism-violet) 100%
+    );
+
+    --gradient-violet-cyan: linear-gradient(135deg, var(--prism-violet) 0%, var(--prism-cyan) 100%);
+    --gradient-cyan-gold: linear-gradient(135deg, var(--prism-cyan) 0%, var(--prism-gold) 100%);
+    --gradient-gold-orange: linear-gradient(135deg, var(--prism-gold) 0%, var(--prism-orange) 100%);
+    --gradient-violet-pink: linear-gradient(135deg, var(--prism-violet) 0%, var(--prism-pink) 100%);
+
+    /* Glassmorphism */
+    --glass-bg: rgba(20, 20, 22, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-colored: rgba(139, 92, 246, 0.3);
+
+    /* Typography */
+    --font-display: 'Clash Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-2xl: 32px;
 }
 
 * {
@@ -35,11 +81,13 @@ html {
 }
 
 body {
-    font-family: var(--font-system);
+    font-family: var(--font-body);
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    /* Subtle noise texture for depth */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
 /* Hero Section */
@@ -52,10 +100,58 @@ body {
     text-align: center;
     padding: 2rem;
     position: relative;
+    overflow: hidden;
+}
+
+/* Gradient mesh overlay */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 50% at 70% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 30% at 10% 70%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Animated light rays */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(139, 92, 246, 0.03) 30deg,
+        transparent 60deg,
+        rgba(6, 182, 212, 0.03) 120deg,
+        transparent 150deg,
+        rgba(245, 158, 11, 0.03) 210deg,
+        transparent 240deg,
+        rgba(249, 115, 22, 0.03) 300deg,
+        transparent 330deg
+    );
+    animation: rotateRays 60s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes rotateRays {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .hero-content {
     max-width: 800px;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-logo {
@@ -72,26 +168,32 @@ body {
 }
 
 .hero-wordmark {
-    font-family: var(--font-brand);
-    font-size: 3.5rem;
+    font-family: var(--font-display);
+    font-size: 4rem;
     font-weight: 700;
-    color: var(--text-primary);
     margin-bottom: 2rem;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
+    /* Prismatic text gradient */
+    background: var(--gradient-prismatic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-headline {
-    font-family: var(--font-brand);
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
 }
 
 .hero-subhead {
-    font-size: 1.125rem;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: 400;
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
     line-height: 1.7;
@@ -101,26 +203,47 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--prism-violet), var(--prism-violet-dark));
+    padding: 1.125rem 2.25rem;
+    /* Animated gradient background */
+    background: linear-gradient(
+        135deg,
+        var(--prism-violet) 0%,
+        var(--prism-blue) 50%,
+        var(--prism-violet) 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
     color: white;
-    font-family: var(--font-brand);
+    font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 600;
     text-decoration: none;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    border-radius: var(--radius-lg);
+    border: none;
+    cursor: pointer;
+    /* Glow effect */
+    box-shadow:
+        0 4px 20px rgba(139, 92, 246, 0.4),
+        0 0 40px rgba(139, 92, 246, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 8px 32px rgba(139, 92, 246, 0.5),
+        0 0 60px rgba(139, 92, 246, 0.3);
 }
 
 .cta-button.large {
-    padding: 1.25rem 2.5rem;
-    font-size: 1.25rem;
+    padding: 1.375rem 3rem;
+    font-size: 1.375rem;
+    border-radius: var(--radius-xl);
 }
 
 .apple-icon {
@@ -159,8 +282,15 @@ body {
 
 /* Animation Section */
 .animation-section {
-    height: 150vh; /* Shorter scroll */
+    height: 120vh; /* Tighter scroll */
     position: relative;
+    background:
+        linear-gradient(180deg,
+            var(--bg-primary) 0%,
+            var(--bg-secondary) 30%,
+            var(--bg-tertiary) 70%,
+            var(--bg-primary) 100%
+        );
 }
 
 .animation-container {
@@ -221,19 +351,72 @@ body {
 }
 
 .prism-logo {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     position: relative;
     z-index: 2;
+    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5));
 }
 
+/* Multi-layered prismatic glow */
 .prism-glow {
     position: absolute;
-    width: 160px;
-    height: 160px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%);
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    filter: blur(20px);
+    /* Layered radial gradients for refraction effect */
+    background:
+        radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.4) 0%, transparent 40%),
+        radial-gradient(circle at 70% 30%, rgba(6, 182, 212, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 50% 70%, rgba(245, 158, 11, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 30% 60%, rgba(249, 115, 22, 0.2) 0%, transparent 40%);
+    filter: blur(30px);
+    animation: prismPulse 4s ease-in-out infinite;
+}
+
+@keyframes prismPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+/* Light rays emanating from prism */
+.prism-rays {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(139, 92, 246, 0.1) 15deg,
+        transparent 30deg,
+        rgba(59, 130, 246, 0.1) 60deg,
+        transparent 75deg,
+        rgba(6, 182, 212, 0.1) 105deg,
+        transparent 120deg,
+        rgba(20, 184, 166, 0.1) 150deg,
+        transparent 165deg,
+        rgba(245, 158, 11, 0.1) 195deg,
+        transparent 210deg,
+        rgba(249, 115, 22, 0.1) 240deg,
+        transparent 255deg,
+        rgba(236, 72, 153, 0.1) 285deg,
+        transparent 300deg,
+        rgba(217, 70, 239, 0.1) 330deg,
+        transparent 345deg
+    );
+    animation: rotateRays 30s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.prism-container.active .prism-rays {
+    opacity: 1;
 }
 
 /* Output cards container */
@@ -247,42 +430,74 @@ body {
 
 .output-card {
     position: absolute;
-    width: 240px;
-    padding: 1rem 1.125rem;
-    background: var(--bg-secondary);
-    border: 1px solid var(--text-quaternary);
-    border-radius: 12px;
+    width: 260px;
+    padding: 1.25rem 1.5rem;
+    /* Glassmorphism base */
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    /* Gradient border technique */
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+    background:
+        linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
+        var(--card-gradient, var(--gradient-violet-cyan)) border-box;
+    /* Subtle inner glow */
+    box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+        0 4px 24px -4px rgba(0, 0, 0, 0.3);
     opacity: 0;
     will-change: transform, opacity;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Each card gets a unique gradient from prism colors */
+.output-card:nth-child(1) { --card-gradient: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5)); }
+.output-card:nth-child(2) { --card-gradient: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(6, 182, 212, 0.5)); }
+.output-card:nth-child(3) { --card-gradient: linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(20, 184, 166, 0.5)); }
+.output-card:nth-child(4) { --card-gradient: linear-gradient(135deg, rgba(20, 184, 166, 0.5), rgba(245, 158, 11, 0.5)); }
+.output-card:nth-child(5) { --card-gradient: linear-gradient(135deg, rgba(245, 158, 11, 0.5), rgba(249, 115, 22, 0.5)); }
+.output-card:nth-child(6) { --card-gradient: linear-gradient(135deg, rgba(249, 115, 22, 0.5), rgba(236, 72, 153, 0.5)); }
+.output-card:nth-child(7) { --card-gradient: linear-gradient(135deg, rgba(236, 72, 153, 0.5), rgba(217, 70, 239, 0.5)); }
+.output-card:nth-child(8) { --card-gradient: linear-gradient(135deg, rgba(217, 70, 239, 0.5), rgba(139, 92, 246, 0.5)); }
+
 .output-card:hover {
-    border-color: var(--prism-violet);
-    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.25);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+        0 12px 40px -8px rgba(139, 92, 246, 0.4),
+        0 0 0 1px rgba(139, 92, 246, 0.2);
 }
 
 .card-icon {
-    width: 22px;
-    height: 22px;
-    margin-bottom: 0.4rem;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    background: var(--card-gradient, var(--gradient-violet-cyan));
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-icon svg {
     width: 100%;
     height: 100%;
+    fill: white;
 }
 
 .output-card h3 {
-    font-family: var(--font-brand);
-    font-size: 0.95rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
 .output-card p {
-    font-size: 0.8rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
     color: var(--text-secondary);
     line-height: 1.5;
 }
@@ -304,24 +519,44 @@ body {
 .privacy-box {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
-    max-width: 480px;
+    gap: 1.25rem;
+    max-width: 520px;
     margin-top: 3rem;
-    padding: 1.5rem;
-    background: var(--bg-secondary);
-    border: 1px solid var(--text-quaternary);
-    border-radius: 12px;
+    padding: 1.75rem;
+    /* Glassmorphism */
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    /* Gradient border */
+    border: 1px solid transparent;
+    border-radius: var(--radius-xl);
+    background:
+        linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
+        linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3)) border-box;
     text-align: left;
 }
 
-.privacy-icon svg {
-    width: 28px;
-    height: 28px;
+.privacy-icon {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    background: var(--gradient-violet-cyan);
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.privacy-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: white;
 }
 
 .privacy-text p {
-    font-size: 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
 }
@@ -332,6 +567,176 @@ body {
 
 .privacy-text strong {
     color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Animation Progress Indicator */
+.animation-progress {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.animation-section-active .animation-progress,
+body.animation-active .animation-progress {
+    opacity: 1;
+}
+
+.progress-track {
+    width: 200px;
+    height: 4px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gradient-prismatic);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.progress-label {
+    transition: color 0.2s ease;
+}
+
+.progress-label.active {
+    color: var(--prism-violet);
+}
+
+.progress-label.completed {
+    color: var(--prism-cyan);
+}
+
+/* Social Proof Section */
+.social-proof {
+    padding: 6rem 2rem;
+    background: var(--bg-secondary);
+    text-align: center;
+}
+
+.social-proof-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+}
+
+.testimonial-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px -8px rgba(139, 92, 246, 0.2);
+}
+
+.testimonial-content p {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gradient-violet-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: white;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.author-title {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+.stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-prismatic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
 }
 
 /* Footer */
@@ -345,7 +750,7 @@ body {
 }
 
 .footer-wordmark {
-    font-family: var(--font-brand);
+    font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-tertiary);
@@ -376,21 +781,35 @@ body {
 /* Tablet */
 @media (max-width: 1024px) {
     .source-icon svg {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
     }
 
     .output-card {
-        width: 170px;
-        padding: 0.75rem;
+        width: 200px;
+        padding: 1rem;
     }
 
     .output-card h3 {
-        font-size: 0.8rem;
+        font-size: 0.95rem;
     }
 
     .output-card p {
-        font-size: 0.65rem;
+        font-size: 0.8rem;
+    }
+
+    .card-icon {
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-row {
+        gap: 2.5rem;
     }
 }
 
@@ -491,6 +910,26 @@ body {
         align-items: center;
     }
 
+    /* Social proof mobile */
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Hide progress indicator on mobile */
+    .animation-progress {
+        display: none;
+    }
+
+    /* Hide prism rays on mobile */
+    .prism-rays {
+        display: none;
+    }
+
     .footer-links {
         flex-direction: column;
         gap: 0.75rem;
@@ -499,7 +938,23 @@ body {
 }
 
 /* Accessibility */
+
+/* Focus states for keyboard navigation */
+.cta-button:focus-visible,
+.output-card:focus-visible,
+.testimonial-card:focus-visible,
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--prism-cyan);
+    outline-offset: 2px;
+}
+
 @media (prefers-contrast: high) {
+    :root {
+        --text-secondary: #C4C4C8;
+        --text-tertiary: #9A9A9F;
+    }
+
     .output-card {
         border-width: 2px;
     }
@@ -507,18 +962,41 @@ body {
     .cta-button {
         border: 2px solid white;
     }
+
+    .testimonial-card {
+        border-width: 2px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .hero-logo {
+    .hero-logo,
+    .scroll-indicator,
+    .prism-glow,
+    .prism-rays,
+    .hero::after {
         animation: none;
     }
 
-    .scroll-indicator {
+    .cta-button {
         animation: none;
+        background-size: 100% 100%;
     }
 
     * {
-        transition: none !important;
+        transition-duration: 0.01ms !important;
     }
+}
+
+/* Performance optimizations */
+.output-card,
+.source-icon,
+.prism-container,
+.prism-glow,
+.prism-rays,
+.testimonial-card {
+    will-change: transform, opacity;
+}
+
+.animation-container {
+    contain: layout style;
 }
