@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - DayPrism</title>
+    <meta name="description" content="Privacy Policy for DayPrism - AI-Powered Personal Intelligence for Mac">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/dayprism_transparent.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/legal.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="legal-header">
+        <a href="index.html" class="legal-logo">
+            <img src="assets/dayprism_transparent.png" alt="DayPrism">
+            <span>DayPrism</span>
+        </a>
+    </header>
+
+    <!-- Legal Content -->
+    <main class="legal-content">
+        <h1>Privacy Policy</h1>
+        <p class="effective-date"><strong>Effective Date:</strong> January 15, 2026</p>
+        <p class="effective-date"><strong>Last Updated:</strong> January 15, 2026</p>
+
+        <section>
+            <h2>1. Introduction</h2>
+            <p>This Privacy Policy explains how SG Block LLC ("Company," "we," "us," or "our") collects, uses, stores, and protects information when you use DayPrism, a macOS desktop application ("Application" or "Software"). By downloading, installing, or using DayPrism, you agree to the practices described in this Privacy Policy.</p>
+            <p>DayPrism is designed with privacy as a core principle. <strong>Your data stays on your Mac.</strong> We do not operate servers that receive, store, or process your personal data. However, you should understand how DayPrism interacts with your local data and third-party services.</p>
+        </section>
+
+        <section>
+            <h2>2. Information We Do NOT Collect</h2>
+            <p>To be explicit about our privacy-first design:</p>
+            <ul>
+                <li><strong>No Telemetry:</strong> DayPrism does not collect usage analytics, crash reports, or telemetry data.</li>
+                <li><strong>No Server Communication:</strong> DayPrism does not transmit data to servers owned or operated by SG Block LLC.</li>
+                <li><strong>No Account Required:</strong> DayPrism does not require you to create an account with us.</li>
+                <li><strong>No Tracking:</strong> DayPrism does not include advertising trackers, analytics SDKs, or fingerprinting technologies.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. Information Accessed Locally</h2>
+            <p>DayPrism accesses the following data sources <strong>stored on your Mac</strong> to provide its functionality. This data never leaves your device except as described in Section 5.</p>
+
+            <h3>3.1 Messages and Communications</h3>
+            <ul>
+                <li><strong>Apple iMessage:</strong> DayPrism reads your iMessage database located at <code>~/Library/Messages/chat.db</code> to retrieve recent messages. This requires Full Disk Access permission.</li>
+                <li><strong>WhatsApp (Native):</strong> If installed, DayPrism reads the WhatsApp database from <code>~/Library/Containers/com.whatsapp/</code>. This requires Full Disk Access permission.</li>
+                <li><strong>WhatsApp Web:</strong> Optionally, DayPrism can use browser automation to read messages from WhatsApp Web using your existing session.</li>
+            </ul>
+
+            <h3>3.2 Meeting Transcripts</h3>
+            <ul>
+                <li><strong>Granola:</strong> If you use Granola for meeting notes, DayPrism reads cached transcripts from <code>~/Library/Application Support/Granola/</code>.</li>
+            </ul>
+
+            <h3>3.3 Contacts</h3>
+            <ul>
+                <li><strong>macOS Contacts:</strong> DayPrism reads your Contacts database to match phone numbers and email addresses to names, improving the quality of briefings.</li>
+            </ul>
+
+            <h3>3.4 Locally Cached Data</h3>
+            <p>DayPrism stores processed data locally in the following locations:</p>
+            <ul>
+                <li><code>~/.dayprism/evidence_store.db</code> - SQLite database containing parsed messages, emails, and events</li>
+                <li><code>~/.dayprism/output/</code> - Generated briefings and summaries</li>
+                <li><code>~/.dayprism/logs/</code> - Application logs (stored locally only)</li>
+                <li><code>~/Library/Application Support/DayPrism/</code> - Application settings and preferences</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Third-Party Services You Connect</h2>
+            <p>DayPrism allows you to connect to the following third-party services using OAuth 2.0 authentication. When you authorize these connections, DayPrism retrieves data from these services:</p>
+
+            <h3>4.1 Google Services</h3>
+            <ul>
+                <li><strong>Gmail:</strong> Emails from your inbox (primary label), sent emails, and email metadata</li>
+                <li><strong>Google Calendar:</strong> Calendar events, attendees, and event details</li>
+            </ul>
+            <p>OAuth tokens are stored locally at <code>~/.dayprism/google_token.json</code> and in your macOS Keychain. You can revoke access at any time through your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account settings</a>.</p>
+
+            <h3>4.2 Microsoft Services</h3>
+            <ul>
+                <li><strong>Outlook Mail:</strong> Emails and email metadata</li>
+                <li><strong>Outlook Calendar:</strong> Calendar events and meeting details</li>
+            </ul>
+            <p>OAuth tokens are stored locally at <code>~/.dayprism/outlook_token.json</code>. You can revoke access through your <a href="https://account.live.com/consent/Manage" target="_blank" rel="noopener">Microsoft Account settings</a>.</p>
+        </section>
+
+        <section>
+            <h2>5. Data Transmitted to AI Services</h2>
+            <p class="important-notice"><strong>IMPORTANT:</strong> To generate briefings, DayPrism sends your data to third-party AI services using API keys that <em>you</em> provide. This means your data leaves your device and is processed by these third parties according to their respective privacy policies.</p>
+
+            <h3>5.1 Anthropic (Claude API)</h3>
+            <p>DayPrism sends structured data (emails, messages, calendar events, meeting notes) to Anthropic's Claude API to generate briefings and answer queries. Review Anthropic's privacy practices at <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>.</p>
+            <p><strong>Data sent includes:</strong> Email subjects, bodies, senders, timestamps; message content and participants; calendar event details; meeting transcripts and summaries.</p>
+
+            <h3>5.2 Google (Gemini API)</h3>
+            <p>DayPrism uses Google's Gemini API to parse and structure raw data before briefing generation. Review Google's AI privacy practices at <a href="https://ai.google.dev/terms" target="_blank" rel="noopener">ai.google.dev/terms</a>.</p>
+
+            <h3>5.3 Your Control Over AI Data Transmission</h3>
+            <ul>
+                <li>You provide your own API keys; DayPrism does not include bundled API access.</li>
+                <li>You can review what data sources are enabled in DayPrism settings.</li>
+                <li>You can disable specific data sources to exclude them from AI processing.</li>
+                <li>API calls are made directly from your device to these services.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>6. macOS Permissions Required</h2>
+            <p>DayPrism requires the following macOS permissions to function:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Permission</th>
+                        <th>Purpose</th>
+                        <th>Required For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Full Disk Access</td>
+                        <td>Read iMessage and WhatsApp databases</td>
+                        <td>Message data sources</td>
+                    </tr>
+                    <tr>
+                        <td>Contacts</td>
+                        <td>Resolve phone numbers to names</td>
+                        <td>Identity matching</td>
+                    </tr>
+                    <tr>
+                        <td>Network</td>
+                        <td>Connect to Gmail, Calendar, Outlook, AI APIs</td>
+                        <td>All cloud features</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>You can modify these permissions at any time in System Settings > Privacy & Security.</p>
+        </section>
+
+        <section>
+            <h2>7. Data Retention</h2>
+            <h3>7.1 Local Data</h3>
+            <p>Data cached by DayPrism remains on your device until you delete it. You can delete all DayPrism data by removing:</p>
+            <ul>
+                <li><code>~/.dayprism/</code> (all cached data, tokens, and outputs)</li>
+                <li><code>~/Library/Application Support/DayPrism/</code> (settings)</li>
+            </ul>
+
+            <h3>7.2 Third-Party Services</h3>
+            <p>Data retention by Anthropic, Google, and Microsoft is governed by their respective privacy policies. We recommend reviewing their data retention practices.</p>
+        </section>
+
+        <section>
+            <h2>8. Data Security</h2>
+            <p>DayPrism implements the following security measures:</p>
+            <ul>
+                <li><strong>Keychain Storage:</strong> API keys are stored in the macOS Keychain, Apple's secure credential storage system.</li>
+                <li><strong>OAuth 2.0:</strong> Industry-standard authentication for Google and Microsoft services.</li>
+                <li><strong>Local Processing:</strong> Data aggregation and processing occurs on your device.</li>
+                <li><strong>HTTPS:</strong> All API communications use encrypted HTTPS connections.</li>
+            </ul>
+            <p>However, no software is perfectly secure. By using DayPrism, you acknowledge that you are responsible for securing your device and API credentials.</p>
+        </section>
+
+        <section>
+            <h2>9. Children's Privacy</h2>
+            <p>DayPrism is not intended for use by individuals under the age of 18. We do not knowingly collect personal information from children. If you believe a child has used DayPrism, please contact us.</p>
+        </section>
+
+        <section>
+            <h2>10. California Privacy Rights (CCPA)</h2>
+            <p>If you are a California resident, you have specific rights under the California Consumer Privacy Act (CCPA):</p>
+            <ul>
+                <li><strong>Right to Know:</strong> You have the right to know what personal information is collected. As described above, DayPrism does not transmit personal data to our servers.</li>
+                <li><strong>Right to Delete:</strong> You can delete all local data by removing the directories listed in Section 7.1.</li>
+                <li><strong>Right to Opt-Out:</strong> DayPrism does not sell personal information.</li>
+                <li><strong>Non-Discrimination:</strong> We do not discriminate against users who exercise their privacy rights.</li>
+            </ul>
+            <p>To exercise any rights regarding data transmitted to third-party AI services, contact those providers directly.</p>
+        </section>
+
+        <section>
+            <h2>11. Changes to This Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of material changes by:</p>
+            <ul>
+                <li>Updating the "Last Updated" date at the top of this policy</li>
+                <li>Posting a notice on the DayPrism website</li>
+                <li>Including a notice in Application release notes</li>
+            </ul>
+            <p>Your continued use of DayPrism after changes take effect constitutes acceptance of the revised policy.</p>
+        </section>
+
+        <section>
+            <h2>12. Contact Us</h2>
+            <p>If you have questions about this Privacy Policy or DayPrism's privacy practices, contact us at:</p>
+            <p>
+                <strong>SG Block LLC</strong><br>
+                Email: <a href="mailto:privacy@dayprism.com">privacy@dayprism.com</a>
+            </p>
+        </section>
+
+        <section>
+            <h2>13. Summary</h2>
+            <div class="summary-box">
+                <h3>Key Privacy Facts</h3>
+                <ul>
+                    <li><strong>Your data stays on your Mac</strong> - We don't operate servers that receive your data</li>
+                    <li><strong>No tracking or analytics</strong> - We don't monitor how you use the app</li>
+                    <li><strong>You control AI access</strong> - You provide your own API keys</li>
+                    <li><strong>Data goes to AI providers</strong> - When generating briefings, your data is sent to Anthropic and Google</li>
+                    <li><strong>Full Disk Access required</strong> - For reading iMessage and WhatsApp databases</li>
+                    <li><strong>You can delete everything</strong> - Remove ~/.dayprism/ to delete all local data</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span class="footer-wordmark">DayPrism</span>
+        <nav class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+        </nav>
+        <span class="footer-copyright">© 2026 SG Block LLC · Made in SF</span>
+    </footer>
+</body>
+</html>
