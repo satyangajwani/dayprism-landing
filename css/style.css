@@ -490,6 +490,12 @@ body {
         text-align: center;
         align-items: center;
     }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+    }
 }
 
 /* Accessibility */
