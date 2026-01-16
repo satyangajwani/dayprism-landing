@@ -1,5 +1,5 @@
 // DayPrism Landing Page Animations
-// Compact visual: Sources surround prism closely, converge in, cards burst out
+// Smooth visual: Sources converge with trails, cards emerge with trails
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,23 +18,43 @@ function initAnimations() {
     const sources = document.querySelectorAll('.source-icon');
     const prism = document.querySelector('.prism-container');
     const cards = document.querySelectorAll('.output-card');
+    const animationContainer = document.querySelector('.animation-container');
 
-    if (!prism) return;
+    if (!prism || !animationContainer) return;
 
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
     // ============================================
-    // SOURCES: Position in a tight circle AROUND the prism
-    // Much closer so the convergence feels connected
+    // CREATE SVG OVERLAY FOR TRAIL LINES
     // ============================================
-    const sourceRadius = 180; // Tight circle around prism
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const trailSvg = document.createElementNS(svgNS, 'svg');
+    trailSvg.setAttribute('class', 'trail-lines');
+    trailSvg.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    `;
+    animationContainer.appendChild(trailSvg);
+
+    // ============================================
+    // SOURCES: Position in circle around prism
+    // ============================================
+    const sourceRadius = 230;
     const sourceCount = sources.length;
+    const sourcePositions = [];
 
     sources.forEach((source, i) => {
-        const angle = (i / sourceCount) * Math.PI * 2 - Math.PI / 2; // Start from top
+        const angle = (i / sourceCount) * Math.PI * 2 - Math.PI / 2;
         const x = centerX + Math.cos(angle) * sourceRadius;
         const y = centerY + Math.sin(angle) * sourceRadius;
+
+        sourcePositions.push({ x, y, angle });
 
         gsap.set(source, {
             left: x - 25,
@@ -42,29 +62,38 @@ function initAnimations() {
             opacity: 1,
             scale: 1
         });
+
+        // Create trail line for each source
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', x);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', centerX);
+        line.setAttribute('y2', centerY);
+        line.setAttribute('stroke', 'url(#trailGradientIn)');
+        line.setAttribute('stroke-width', '2');
+        line.setAttribute('stroke-linecap', 'round');
+        line.setAttribute('opacity', '0');
+        line.setAttribute('class', 'source-trail');
+        trailSvg.appendChild(line);
+        source._trailLine = line;
     });
 
     // ============================================
-    // CARDS: Final positions in 2 rows below/around prism
-    // Start at center, will burst outward
+    // CARDS: Final positions in 2 rows
     // ============================================
-    const cardWidth = 200;
-    const cardHeight = 100;
+    const cardWidth = 240;
+    const cardHeight = 110;
     const cardGap = 16;
-
-    // Two rows of 4 cards each, centered below the prism
-    const row1Y = centerY + 100; // First row below prism
-    const row2Y = centerY + 220; // Second row
+    const row1Y = centerY + 120;
+    const row2Y = centerY + 260;
     const totalRowWidth = 4 * cardWidth + 3 * cardGap;
     const startX = centerX - totalRowWidth / 2;
 
     const cardFinalPositions = [
-        // Row 1: 4 cards
         { x: startX, y: row1Y },
         { x: startX + cardWidth + cardGap, y: row1Y },
         { x: startX + 2 * (cardWidth + cardGap), y: row1Y },
         { x: startX + 3 * (cardWidth + cardGap), y: row1Y },
-        // Row 2: 4 cards
         { x: startX, y: row2Y },
         { x: startX + cardWidth + cardGap, y: row2Y },
         { x: startX + 2 * (cardWidth + cardGap), y: row2Y },
@@ -75,32 +104,70 @@ function initAnimations() {
         const pos = cardFinalPositions[i];
         card._finalX = pos.x;
         card._finalY = pos.y;
+        card._finalCenterX = pos.x + cardWidth / 2;
+        card._finalCenterY = pos.y + cardHeight / 2;
 
-        // Start hidden at prism center
         gsap.set(card, {
             left: centerX - cardWidth / 2,
             top: centerY - cardHeight / 2,
             opacity: 0,
             scale: 0.1
         });
+
+        // Create trail line for each card
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', centerX);
+        line.setAttribute('y1', centerY);
+        line.setAttribute('x2', centerX);
+        line.setAttribute('y2', centerY);
+        line.setAttribute('stroke', 'url(#trailGradientOut)');
+        line.setAttribute('stroke-width', '2');
+        line.setAttribute('stroke-linecap', 'round');
+        line.setAttribute('opacity', '0');
+        line.setAttribute('class', 'card-trail');
+        trailSvg.appendChild(line);
+        card._trailLine = line;
     });
 
-    // Prism starts visible but smaller
+    // Add gradient definitions
+    const defs = document.createElementNS(svgNS, 'defs');
+
+    // Gradient for incoming trails (source to center)
+    const gradIn = document.createElementNS(svgNS, 'linearGradient');
+    gradIn.setAttribute('id', 'trailGradientIn');
+    gradIn.innerHTML = `
+        <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+    `;
+    defs.appendChild(gradIn);
+
+    // Gradient for outgoing trails (center to card)
+    const gradOut = document.createElementNS(svgNS, 'linearGradient');
+    gradOut.setAttribute('id', 'trailGradientOut');
+    gradOut.innerHTML = `
+        <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.8"/>
+    `;
+    defs.appendChild(gradOut);
+
+    trailSvg.insertBefore(defs, trailSvg.firstChild);
+
+    // Prism starts smaller
     gsap.set(prism, { opacity: 0.3, scale: 0.8 });
 
     // ============================================
-    // ANIMATION TIMELINE
+    // ANIMATION TIMELINE - SLOWER & SMOOTHER
     // ============================================
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.animation-section',
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.3,
+            scrub: 1.5, // Much smoother/slower scrub
         }
     });
 
-    // PHASE 1 (0-20%): Everything visible, prism grows
+    // PHASE 1 (0-15%): Prism fades in and grows
     tl.to(prism, {
         opacity: 1,
         scale: 1,
@@ -108,28 +175,87 @@ function initAnimations() {
         ease: 'power2.out'
     }, 0);
 
-    // PHASE 2 (15-50%): Sources converge INTO prism center simultaneously
+    // PHASE 2 (10-55%): Sources converge with trails - SLOWER
     sources.forEach((source, i) => {
+        const startTime = 0.08 + i * 0.03;
+        const trailLine = source._trailLine;
+        const startPos = sourcePositions[i];
+
+        // Show trail line first
+        tl.to(trailLine, {
+            attr: { opacity: 0.7 },
+            duration: 0.12,
+            ease: 'power1.in'
+        }, startTime);
+
+        // Animate source moving to center
         tl.to(source, {
             left: centerX - 25,
             top: centerY - 30,
+            scale: 0.3,
+            opacity: 0.5,
+            duration: 0.35,
+            ease: 'power2.inOut'
+        }, startTime + 0.08);
+
+        // Shrink trail as source moves (update x1, y1 to follow source)
+        tl.to(trailLine, {
+            attr: {
+                x1: centerX,
+                y1: centerY,
+                opacity: 0
+            },
+            duration: 0.30,
+            ease: 'power2.in'
+        }, startTime + 0.15);
+
+        // Final fade out of source
+        tl.to(source, {
             scale: 0,
             opacity: 0,
-            duration: 0.3,
-            ease: 'power3.in'
-        }, 0.15 + i * 0.015); // Slight stagger for visual effect
+            duration: 0.12,
+            ease: 'power2.in'
+        }, startTime + 0.35);
     });
 
-    // PHASE 3 (45-95%): Cards burst OUT from prism center
+    // PHASE 3 (55-95%): Cards emerge with trails - SLOWER
     cards.forEach((card, i) => {
+        const startTime = 0.55 + i * 0.045;
+        const trailLine = card._trailLine;
+        const finalX = card._finalCenterX;
+        const finalY = card._finalCenterY;
+
+        // Show trail line extending outward
+        tl.to(trailLine, {
+            attr: {
+                x2: finalX,
+                y2: finalY,
+                opacity: 0.7
+            },
+            duration: 0.18,
+            ease: 'power2.out'
+        }, startTime);
+
+        // Card emerges and follows the trail
         tl.to(card, {
             left: card._finalX,
             top: card._finalY,
             scale: 1,
             opacity: 1,
-            duration: 0.2,
+            duration: 0.28,
             ease: 'power2.out'
-        }, 0.45 + i * 0.04);
+        }, startTime + 0.08);
+
+        // Trail fades as card arrives
+        tl.to(trailLine, {
+            attr: {
+                x1: finalX,
+                y1: finalY,
+                opacity: 0
+            },
+            duration: 0.20,
+            ease: 'power2.out'
+        }, startTime + 0.20);
     });
 
     // Hold at end
@@ -172,4 +298,4 @@ window.addEventListener('resize', () => {
     }, 200);
 });
 
-console.log('DayPrism animations loaded');
+console.log('DayPrism animations loaded v3');
