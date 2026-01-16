@@ -233,7 +233,7 @@ function initAnimations() {
 
     // PHASE 2 (8-50%): Sources converge with trails
     sources.forEach((source, i) => {
-        const startTime = 0.08 + i * 0.025; // Tighter stagger
+        const startTime = 0.08 + i * 0.015; // Tighter stagger
         const trailLine = source._trailLine;
 
         // Show trail line first
@@ -275,7 +275,7 @@ function initAnimations() {
 
     // PHASE 3 (55-92%): Cards emerge with trails
     cards.forEach((card, i) => {
-        const startTime = 0.55 + i * 0.04; // Tighter stagger
+        const startTime = 0.55 + i * 0.025; // Tighter stagger
         const trailLine = card._trailLine;
         const finalX = card._finalCenterX;
         const finalY = card._finalCenterY;
@@ -322,6 +322,26 @@ document.querySelectorAll('.cta-button').forEach(btn => {
     btn.addEventListener('mouseenter', () => gsap.to(btn, { scale: 1.02, duration: 0.2 }));
     btn.addEventListener('mouseleave', () => gsap.to(btn, { scale: 1, duration: 0.2 }));
 });
+
+// Sticky navigation visibility
+const stickyNav = document.getElementById('stickyNav');
+if (stickyNav) {
+    let lastScrollY = 0;
+    const heroHeight = document.querySelector('.hero')?.offsetHeight || window.innerHeight;
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        // Show nav after scrolling past hero
+        if (currentScrollY > heroHeight * 0.7) {
+            stickyNav.classList.add('visible');
+        } else {
+            stickyNav.classList.remove('visible');
+        }
+
+        lastScrollY = currentScrollY;
+    }, { passive: true });
+}
 
 // Card hover effects handled by CSS now for glassmorphism
 
