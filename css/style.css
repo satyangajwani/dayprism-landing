@@ -157,9 +157,9 @@ body {
     60% { transform: translateY(5px); }
 }
 
-/* Animation Section - tighter scroll distance */
+/* Animation Section */
 .animation-section {
-    min-height: 180vh; /* Reduced from 250vh - less scrolling */
+    height: 150vh; /* Shorter scroll */
     position: relative;
 }
 
@@ -168,22 +168,20 @@ body {
     top: 0;
     height: 100vh;
     width: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
-/* Source Icons - positioned around center, will animate INTO prism */
+/* All elements positioned relative to center */
 .sources {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    top: 0;
+    left: 0;
 }
 
 .source-icon {
@@ -191,25 +189,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    opacity: 0;
-    /* Each icon will be positioned via JS to spread around the center */
+    gap: 0.4rem;
+    opacity: 1; /* Start visible */
+    will-change: transform, opacity;
 }
 
 .source-icon svg {
-    width: 44px;
-    height: 44px;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 .source-icon span {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-secondary);
     font-weight: 500;
     white-space: nowrap;
 }
 
-/* Prism - center of the screen */
+/* Prism in exact center */
 .prism-container {
     position: absolute;
     top: 50%;
@@ -223,49 +221,40 @@ body {
 }
 
 .prism-logo {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     position: relative;
     z-index: 2;
 }
 
 .prism-glow {
     position: absolute;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, transparent 70%);
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%);
     border-radius: 50%;
-    filter: blur(30px);
-    animation: pulse 3s ease-in-out infinite;
+    filter: blur(20px);
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-}
-
-/* Output Cards - positioned around center, will animate OUT FROM prism */
+/* Output cards container */
 .outputs {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    top: 0;
+    left: 0;
 }
 
 .output-card {
     position: absolute;
-    width: 220px;
-    padding: 1rem;
+    width: 200px;
+    padding: 0.875rem;
     background: var(--bg-secondary);
     border: 1px solid var(--text-quaternary);
-    border-radius: 12px;
+    border-radius: 10px;
     opacity: 0;
-    pointer-events: auto;
+    will-change: transform, opacity;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    /* Each card will be positioned via JS to spread around center */
 }
 
 .output-card:hover {
@@ -274,9 +263,9 @@ body {
 }
 
 .card-icon {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 0.5rem;
+    width: 22px;
+    height: 22px;
+    margin-bottom: 0.4rem;
 }
 
 .card-icon svg {
@@ -286,14 +275,14 @@ body {
 
 .output-card h3 {
     font-family: var(--font-brand);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
 }
 
 .output-card p {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
     line-height: 1.4;
 }
@@ -367,28 +356,28 @@ body {
     color: var(--text-quaternary);
 }
 
-/* Tablet Responsive */
+/* Tablet */
 @media (max-width: 1024px) {
     .source-icon svg {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
     }
 
     .output-card {
-        width: 180px;
-        padding: 0.875rem;
+        width: 170px;
+        padding: 0.75rem;
     }
 
     .output-card h3 {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .output-card p {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
     }
 }
 
-/* Mobile Responsive */
+/* Mobile */
 @media (max-width: 768px) {
     .hero-wordmark {
         font-size: 2.5rem;
@@ -415,32 +404,25 @@ body {
         display: none;
     }
 
-    /* Simplified mobile - no animation, vertical stack */
+    /* Mobile: static layout, no animation */
     .animation-section {
-        min-height: auto;
-        padding: 3rem 1rem;
+        height: auto;
+        padding: 2rem 1rem;
     }
 
     .animation-container {
         position: relative;
         height: auto;
-        display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .sources {
         position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        width: 100%;
-        height: auto;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 1.25rem;
+        gap: 1rem;
         padding: 1rem;
     }
 
@@ -450,12 +432,12 @@ body {
     }
 
     .source-icon svg {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
     }
 
     .source-icon span {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
     .prism-container {
@@ -464,24 +446,20 @@ body {
         left: auto;
         transform: none;
         opacity: 1;
-        margin: 1.5rem 0;
+        margin: 1rem 0;
     }
 
     .prism-logo {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
     }
 
     .outputs {
         position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        width: 100%;
-        height: auto;
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.75rem;
+        width: 100%;
     }
 
     .output-card {
@@ -497,7 +475,7 @@ body {
     }
 }
 
-/* High contrast mode support */
+/* Accessibility */
 @media (prefers-contrast: high) {
     .output-card {
         border-width: 2px;
@@ -508,17 +486,12 @@ body {
     }
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     .hero-logo {
         animation: none;
     }
 
     .scroll-indicator {
-        animation: none;
-    }
-
-    .prism-glow {
         animation: none;
     }
 

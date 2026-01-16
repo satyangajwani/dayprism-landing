@@ -1,196 +1,181 @@
 // DayPrism Landing Page Animations
-// Sources converge INTO the prism, cards emerge OUT OF the prism
+// Visual flow: Sources → converge INTO prism → Cards emerge OUT
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Check for reduced motion preference
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// Check if mobile
 const isMobile = window.innerWidth < 768;
 
 if (!prefersReducedMotion && !isMobile) {
-    initScrollAnimations();
-} else if (isMobile) {
-    // On mobile, just show everything (handled by CSS)
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', initAnimations);
+    if (document.readyState !== 'loading') {
+        initAnimations();
+    }
 }
 
-function initScrollAnimations() {
+function initAnimations() {
+    const container = document.querySelector('.animation-container');
     const sources = document.querySelectorAll('.source-icon');
-    const prismContainer = document.querySelector('.prism-container');
-    const outputs = document.querySelectorAll('.output-card');
-    const animContainer = document.querySelector('.animation-container');
+    const prism = document.querySelector('.prism-container');
+    const cards = document.querySelectorAll('.output-card');
 
-    // Get center of the animation container
+    if (!container || !prism) return;
+
+    const containerRect = container.getBoundingClientRect();
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
-    // Position source icons in a circle around the center (they start spread out)
-    const sourceRadius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
+    // ============================================
+    // POSITION SOURCES in an arc at TOP of screen
+    // They will animate DOWN into the prism
+    // ============================================
+    const sourceCount = sources.length;
+    const arcWidth = Math.min(window.innerWidth * 0.8, 900);
+    const arcStartX = centerX - arcWidth / 2;
+    const sourceY = window.innerHeight * 0.15; // Near top
+
     sources.forEach((source, i) => {
-        const angle = (i / sources.length) * Math.PI * 2 - Math.PI / 2; // Start from top
-        const x = centerX + Math.cos(angle) * sourceRadius - 30; // 30 = half icon width approx
-        const y = centerY + Math.sin(angle) * sourceRadius - 30;
-        source.style.left = `${x}px`;
-        source.style.top = `${y}px`;
+        const progress = sourceCount > 1 ? i / (sourceCount - 1) : 0.5;
+        const x = arcStartX + progress * arcWidth;
+        // Slight arc curve
+        const yOffset = Math.sin(progress * Math.PI) * 30;
+
+        gsap.set(source, {
+            left: x - 25,
+            top: sourceY + yOffset,
+            opacity: 1,
+            scale: 1
+        });
     });
 
-    // Position output cards around center (they will animate outward FROM center)
-    // Two rows: 4 on top arc, 4 on bottom arc
-    const cardRadius = Math.min(window.innerWidth * 0.42, 450);
-    outputs.forEach((card, i) => {
-        // Cards positioned in two rows below center
-        let angle, radius;
-        if (i < 4) {
-            // Top row - arc above center
-            angle = Math.PI + (i - 1.5) * 0.35; // Spread across top
-            radius = cardRadius * 0.75;
-        } else {
-            // Bottom row - arc below center
-            angle = (i - 5.5) * 0.35; // Spread across bottom
-            radius = cardRadius * 0.85;
-        }
+    // ============================================
+    // POSITION CARDS around the prism (final positions)
+    // They start at center and animate outward
+    // ============================================
+    // 4 cards on left side, 4 on right side of prism
+    const cardPositions = [
+        // Left column (from top to bottom)
+        { x: centerX - 320, y: centerY - 140 },
+        { x: centerX - 320, y: centerY + 10 },
+        // Right column
+        { x: centerX + 120, y: centerY - 140 },
+        { x: centerX + 120, y: centerY + 10 },
+        // Far left column
+        { x: centerX - 540, y: centerY - 70 },
+        { x: centerX - 540, y: centerY + 80 },
+        // Far right column
+        { x: centerX + 340, y: centerY - 70 },
+        { x: centerX + 340, y: centerY + 80 },
+    ];
 
-        const finalX = centerX + Math.cos(angle) * radius - 110; // 110 = half card width
-        const finalY = centerY + Math.sin(angle) * radius - 50; // 50 = half card height approx
-
-        // Store final positions as data attributes
-        card.dataset.finalX = finalX;
-        card.dataset.finalY = finalY;
-
-        // Start cards at center (they'll animate outward)
-        card.style.left = `${centerX - 110}px`;
-        card.style.top = `${centerY - 50}px`;
+    cards.forEach((card, i) => {
+        const pos = cardPositions[i] || { x: centerX, y: centerY + 200 };
+        // Store final position
+        card._finalX = pos.x;
+        card._finalY = pos.y;
+        // Start cards at center (hidden, will animate outward)
+        gsap.set(card, {
+            left: centerX - 100, // center minus half card width
+            top: centerY - 50,
+            opacity: 0,
+            scale: 0.3
+        });
     });
 
-    // Create main timeline
-    const mainTimeline = gsap.timeline({
+    // Prism starts hidden
+    gsap.set(prism, { opacity: 0, scale: 0.5 });
+
+    // ============================================
+    // CREATE THE ANIMATION TIMELINE
+    // ============================================
+    const tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.animation-section',
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.8,
+            scrub: 0.5,
         }
     });
 
-    // PHASE 1: Sources appear (0% - 15%)
-    // All sources fade in at their spread positions
-    sources.forEach((source, i) => {
-        mainTimeline.to(source, {
-            opacity: 1,
-            duration: 0.12,
-            ease: 'power2.out'
-        }, 0.01 * i);
-    });
-
-    // PHASE 2: Prism starts appearing as sources begin converging (10% - 25%)
-    mainTimeline.to(prismContainer, {
+    // PHASE 1 (0% - 30%): Sources visible, start moving toward center
+    // Prism fades in as sources approach
+    tl.to(prism, {
         opacity: 1,
         scale: 1,
-        duration: 0.15,
+        duration: 0.2,
         ease: 'power2.out'
-    }, 0.10);
+    }, 0.05);
 
-    // PHASE 3: Sources converge INTO the prism center (15% - 45%)
+    // PHASE 2 (10% - 50%): Sources converge INTO the prism center
     sources.forEach((source, i) => {
-        // Calculate current position
-        const rect = source.getBoundingClientRect();
-        const currentX = parseFloat(source.style.left);
-        const currentY = parseFloat(source.style.top);
-
-        // Animate toward center
-        mainTimeline.to(source, {
-            left: centerX - 30, // Move to center
-            top: centerY - 30,
+        tl.to(source, {
+            left: centerX - 25,
+            top: centerY - 25,
             scale: 0.2,
             opacity: 0,
-            duration: 0.25,
+            duration: 0.35,
             ease: 'power2.in'
-        }, 0.15 + i * 0.015);
+        }, 0.1 + i * 0.02);
     });
 
-    // PHASE 4: Cards emerge OUT FROM the prism center (40% - 80%)
-    outputs.forEach((card, i) => {
-        const finalX = parseFloat(card.dataset.finalX);
-        const finalY = parseFloat(card.dataset.finalY);
-
-        mainTimeline.to(card, {
-            left: finalX,
-            top: finalY,
-            opacity: 1,
+    // PHASE 3 (45% - 90%): Cards emerge OUT FROM the prism
+    cards.forEach((card, i) => {
+        tl.to(card, {
+            left: card._finalX,
+            top: card._finalY,
             scale: 1,
-            duration: 0.2,
+            opacity: 1,
+            duration: 0.25,
             ease: 'power2.out'
-        }, 0.40 + i * 0.04);
+        }, 0.45 + i * 0.05);
     });
 
-    // PHASE 5: Hold the final state (80% - 100%)
-    mainTimeline.to({}, { duration: 0.2 });
+    // PHASE 4 (90% - 100%): Hold final state
+    tl.to({}, { duration: 0.1 });
 }
 
-// Button hover effects
-document.querySelectorAll('.cta-button').forEach(button => {
-    button.addEventListener('mouseenter', () => {
-        gsap.to(button, {
-            scale: 1.02,
-            duration: 0.2,
-            ease: 'power2.out'
-        });
+// Button hover
+document.querySelectorAll('.cta-button').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        gsap.to(btn, { scale: 1.02, duration: 0.2 });
     });
-
-    button.addEventListener('mouseleave', () => {
-        gsap.to(button, {
-            scale: 1,
-            duration: 0.2,
-            ease: 'power2.out'
-        });
+    btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { scale: 1, duration: 0.2 });
     });
 });
 
-// Output card hover effects (desktop only)
+// Card hover (desktop)
 if (!isMobile) {
     document.querySelectorAll('.output-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
             gsap.to(card, {
                 scale: 1.03,
-                boxShadow: '0 12px 40px rgba(139, 92, 246, 0.25)',
+                boxShadow: '0 12px 40px rgba(139, 92, 246, 0.3)',
                 borderColor: '#8B5CF6',
-                duration: 0.3,
-                ease: 'power2.out'
+                duration: 0.25
             });
         });
-
         card.addEventListener('mouseleave', () => {
             gsap.to(card, {
                 scale: 1,
                 boxShadow: 'none',
                 borderColor: '#48484A',
-                duration: 0.3,
-                ease: 'power2.out'
+                duration: 0.25
             });
         });
     });
 }
 
-// Handle resize
-let resizeTimer;
+// Resize handler
+let resizeTimeout;
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-        // Recalculate positions on resize
-        if (!prefersReducedMotion && window.innerWidth >= 768) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        if (window.innerWidth >= 768) {
             ScrollTrigger.refresh();
         }
-    }, 250);
+    }, 200);
 });
 
-// Pause when not visible
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        gsap.globalTimeline.pause();
-    } else {
-        gsap.globalTimeline.resume();
-    }
-});
-
-console.log('DayPrism animations initialized');
+console.log('DayPrism animations loaded');
