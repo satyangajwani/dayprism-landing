@@ -440,7 +440,7 @@ body {
 
 /* Animation Section */
 .animation-section {
-    height: 500vh; /* Extended scroll for smoother animation */
+    height: 300vh; /* Balanced scroll speed */
     position: relative;
     background:
         linear-gradient(180deg,
