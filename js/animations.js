@@ -3,6 +3,63 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Platform detection for download links
+(function() {
+    const isMacDesktop = () => {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const platform = navigator.platform?.toLowerCase() || '';
+
+        // Check if it's macOS
+        const isMac = platform.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('mac os');
+
+        // Check if it's NOT a mobile/touch device
+        const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) ||
+                         (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+
+        return isMac && !isMobile;
+    };
+
+    const disableDownloadLinks = () => {
+        const downloadSelectors = [
+            '.nav-cta',           // Nav download button
+            '.hero .cta-button',  // Hero download button
+            '.cta-section .cta-button' // Bottom CTA download button
+        ];
+
+        downloadSelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                if (el.tagName === 'A' && el.href && el.href.includes('.dmg')) {
+                    // Store original href for potential future use
+                    el.dataset.originalHref = el.href;
+
+                    // Remove the href to disable the link
+                    el.removeAttribute('href');
+
+                    // Add disabled styling class
+                    el.classList.add('download-disabled');
+
+                    // Update cursor
+                    el.style.cursor = 'default';
+                }
+            });
+        });
+    };
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!isMacDesktop()) {
+                disableDownloadLinks();
+            }
+        });
+    } else {
+        if (!isMacDesktop()) {
+            disableDownloadLinks();
+        }
+    }
+})();
+
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = window.innerWidth < 768;
 
