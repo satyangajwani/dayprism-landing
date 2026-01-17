@@ -1260,3 +1260,165 @@ a:focus-visible {
     background: var(--prism-violet);
     transform: none;
 }
+
+/* ========================================
+   Data Access Section (Google OAuth Verification)
+   ======================================== */
+
+.data-access-section {
+    padding: 6rem 2rem;
+    background: var(--bg-secondary);
+    text-align: center;
+}
+
+.data-access-section .section-header {
+    font-family: 'Clash Display', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.data-access-intro {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+.data-access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+}
+
+.data-access-card {
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: left;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.data-access-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--prism-violet);
+}
+
+.data-access-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+}
+
+.data-access-icon img,
+.data-access-icon svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.data-access-card h3 {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.data-access-scope {
+    font-size: 0.875rem;
+    color: var(--prism-cyan);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.data-access-why {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.data-access-privacy {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 16px;
+    text-align: left;
+}
+
+.data-access-privacy .privacy-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+}
+
+.data-access-privacy .privacy-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.privacy-details p {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.privacy-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+}
+
+.privacy-details li {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.privacy-details li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10B981;
+    font-weight: 600;
+}
+
+.privacy-link a {
+    color: var(--prism-cyan);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.privacy-link a:hover {
+    color: var(--prism-cyan-light);
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .data-access-privacy {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .privacy-details li {
+        padding-left: 0;
+    }
+
+    .privacy-details li::before {
+        position: static;
+        margin-right: 0.5rem;
+    }
+}
