@@ -440,7 +440,7 @@ body {
 
 /* Animation Section */
 .animation-section {
-    height: 100vh; /* Tighter scroll */
+    height: 500vh; /* Extended scroll for smoother animation */
     position: relative;
     background:
         linear-gradient(180deg,
@@ -502,10 +502,12 @@ body {
     will-change: transform, opacity;
 }
 
-.source-icon svg {
+.source-icon svg,
+.source-icon img {
     width: 52px;
     height: 52px;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    object-fit: contain;
 }
 
 .source-icon span {
@@ -983,7 +985,8 @@ body.animation-active .animation-progress {
 
 /* Tablet */
 @media (max-width: 1024px) {
-    .source-icon svg {
+    .source-icon svg,
+    .source-icon img {
         width: 36px;
         height: 36px;
     }
@@ -1070,7 +1073,8 @@ body.animation-active .animation-progress {
         opacity: 1;
     }
 
-    .source-icon svg {
+    .source-icon svg,
+    .source-icon img {
         width: 36px;
         height: 36px;
     }
