@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Email - DayPrism</title>
+  <link rel="icon" type="image/png" href="/assets/dayprism_transparent.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      padding: 48px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      max-width: 480px;
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .button {
+      display: inline-block;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+    }
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .success-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    .error-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .error-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    .subtext {
+      margin-top: 24px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    .subtext a {
+      color: #8b5cf6;
+      text-decoration: none;
+    }
+    .subtext a:hover {
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e5e7eb;
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .email-display {
+      font-weight: 600;
+      color: #374151;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Loading state -->
+    <div id="loading">
+      <div class="spinner"></div>
+      <h1>Confirming your email...</h1>
+      <p>Please wait while we verify your email address.</p>
+    </div>
+
+    <!-- Success state -->
+    <div id="success" class="hidden">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      </div>
+      <h1>Email Confirmed!</h1>
+      <p>Your email address <span id="confirmed-email" class="email-display"></span> has been confirmed. You'll continue receiving your DayPrism briefings without interruption.</p>
+      <a href="dayprism://open" class="button">Open DayPrism</a>
+      <p class="subtext">
+        <a href="/">Return to homepage</a>
+      </p>
+    </div>
+
+    <!-- Error state -->
+    <div id="error" class="hidden">
+      <div class="error-icon">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </div>
+      <h1>Confirmation Failed</h1>
+      <p id="error-message">The confirmation link is invalid or has expired. Please open DayPrism and request a new confirmation email from Settings.</p>
+      <a href="dayprism://open" class="button">Open DayPrism</a>
+      <p class="subtext">
+        <a href="/">Return to homepage</a>
+      </p>
+    </div>
+
+    <!-- No token state -->
+    <div id="no-token" class="hidden">
+      <img src="/assets/dayprism_transparent.png" alt="DayPrism" class="logo">
+      <h1>Email Confirmation</h1>
+      <p>This page is used to confirm your email address for DayPrism briefings. Please use the link from your confirmation email.</p>
+      <a href="dayprism://open" class="button">Open DayPrism</a>
+      <p class="subtext">
+        <a href="/">Return to homepage</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const PROXY_URL = 'https://dayprism-api-proxy.dayprism.workers.dev';
+
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    function showState(stateId) {
+      document.querySelectorAll('.container > div').forEach(el => el.classList.add('hidden'));
+      document.getElementById(stateId).classList.remove('hidden');
+    }
+
+    async function confirmEmail() {
+      if (!token) {
+        showState('no-token');
+        return;
+      }
+
+      try {
+        // Validate token via proxy
+        const response = await fetch(`${PROXY_URL}/confirm?token=${encodeURIComponent(token)}`);
+        const result = await response.json();
+
+        if (result.valid && result.email) {
+          // Show success with email
+          document.getElementById('confirmed-email').textContent = result.email;
+          showState('success');
+
+          // Also try to open the app to sync the confirmation
+          // The app will validate the token locally and mark as confirmed
+          setTimeout(() => {
+            window.location.href = `dayprism://confirm?token=${encodeURIComponent(token)}`;
+          }, 2000);
+        } else {
+          // Show error with specific message
+          const errorMsg = result.error || 'The confirmation link is invalid or has expired.';
+          document.getElementById('error-message').textContent =
+            errorMsg + ' Please open DayPrism and request a new confirmation email from Settings.';
+          showState('error');
+        }
+
+      } catch (err) {
+        console.error('Confirmation error:', err);
+        document.getElementById('error-message').textContent =
+          'Unable to validate your confirmation. Please check your internet connection and try again, or open DayPrism to confirm from the app.';
+        showState('error');
+      }
+    }
+
+    // Start confirmation on page load
+    confirmEmail();
+  </script>
+</body>
+</html>
