@@ -102,7 +102,7 @@
 
         <section>
             <h2>5. Data Transmitted to AI Services</h2>
-            <p class="important-notice"><strong>IMPORTANT:</strong> To generate briefings, DayPrism sends your data to third-party AI services using API keys that <em>you</em> provide. This means your data leaves your device and is processed by these third parties according to their respective privacy policies.</p>
+            <p class="important-notice"><strong>IMPORTANT:</strong> To generate briefings, DayPrism sends your data to best-in-class third-party AI services. This means your data leaves your device and is processed by these third parties according to their respective privacy policies. Your data is never sent to DayPrism servers.</p>
 
             <h3>5.1 Anthropic (Claude API)</h3>
             <p>DayPrism sends structured data (emails, messages, calendar events, meeting notes) to Anthropic's Claude API to generate briefings and answer queries. Review Anthropic's privacy practices at <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>.</p>
@@ -113,10 +113,10 @@
 
             <h3>5.3 Your Control Over AI Data Transmission</h3>
             <ul>
-                <li>You provide your own API keys; DayPrism does not include bundled API access.</li>
                 <li>You can review what data sources are enabled in DayPrism settings.</li>
                 <li>You can disable specific data sources to exclude them from AI processing.</li>
-                <li>API calls are made directly from your device to these services.</li>
+                <li>API calls are made directly from your device to these AI services.</li>
+                <li>Your data is never routed through or stored on DayPrism servers.</li>
             </ul>
         </section>
 
@@ -169,12 +169,13 @@
             <h2>8. Data Security</h2>
             <p>DayPrism implements the following security measures:</p>
             <ul>
-                <li><strong>Keychain Storage:</strong> API keys are stored in the macOS Keychain, Apple's secure credential storage system.</li>
+                <li><strong>Keychain Storage:</strong> OAuth tokens and credentials are stored in the macOS Keychain, Apple's secure credential storage system.</li>
                 <li><strong>OAuth 2.0:</strong> Industry-standard authentication for Google and Microsoft services.</li>
                 <li><strong>Local Processing:</strong> Data aggregation and processing occurs on your device.</li>
                 <li><strong>HTTPS:</strong> All API communications use encrypted HTTPS connections.</li>
+                <li><strong>No DayPrism Servers:</strong> Your data is never transmitted to servers owned or operated by SG Block LLC.</li>
             </ul>
-            <p>However, no software is perfectly secure. By using DayPrism, you acknowledge that you are responsible for securing your device and API credentials.</p>
+            <p>However, no software is perfectly secure. By using DayPrism, you acknowledge that you are responsible for securing your device.</p>
         </section>
 
         <section>
@@ -221,8 +222,8 @@
                 <ul>
                     <li><strong>Your data stays on your Mac</strong> - We don't operate servers that receive your data</li>
                     <li><strong>No tracking or analytics</strong> - We don't monitor how you use the app</li>
-                    <li><strong>You control AI access</strong> - You provide your own API keys</li>
-                    <li><strong>Data goes to AI providers</strong> - When generating briefings, your data is sent to Anthropic and Google</li>
+                    <li><strong>Best-in-class AI processing</strong> - Your data is processed by Anthropic (Claude) and Google (Gemini)</li>
+                    <li><strong>Data goes to AI providers only</strong> - Never to DayPrism servers</li>
                     <li><strong>Full Disk Access required</strong> - For reading iMessage and WhatsApp databases</li>
                     <li><strong>You can delete everything</strong> - Remove ~/.dayprism/ to delete all local data</li>
                 </ul>
