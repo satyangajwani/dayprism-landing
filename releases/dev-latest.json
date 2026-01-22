@@ -1,8 +1,8 @@
 {
   "version": "1.2.0",
-  "build": 26,
+  "build": 27,
   "download_url": "https://dayprism.com/releases/DayPrism-Dev-1.2.0.dmg",
-  "release_notes": "- Improved error tracking: Full stack traces now captured in Sentry for better debugging\n- Added diagnostic logging to update checker for troubleshooting\n- Fixed potential silent failures in auto-update check on launch",
+  "release_notes": "- Fixed 'cannot schedule new futures after interpreter shutdown' error during app closing\n- Fixed error tracking for update check failures",
   "min_version": "1.0.0",
-  "published_at": "2026-01-22T02:18:28Z"
+  "published_at": "2026-01-22T02:43:37Z"
 }
