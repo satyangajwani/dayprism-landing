@@ -1,8 +1,8 @@
 {
   "version": "1.2.0",
-  "build": 28,
+  "build": 29,
   "download_url": "https://dayprism.com/releases/DayPrism-Dev-1.2.0.dmg",
-  "release_notes": "- Fixed SSL certificate verification error in bundled app\n- Fixed 'All models failed' error caused by SSL issues",
+  "release_notes": "- Fixed SSL certificate verification in bundled app\n- Fixed 'Failed to check for updates' error",
   "min_version": "1.0.0",
-  "published_at": "2026-01-22T02:49:47Z"
+  "published_at": "2026-01-22T03:01:09Z"
 }
