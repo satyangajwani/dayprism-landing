@@ -1,8 +1,8 @@
 {
   "version": "1.2.0",
-  "build": 32,
+  "build": 34,
   "download_url": "https://dayprism.com/releases/DayPrism-Dev-1.2.0.dmg",
-  "release_notes": "- Fixed SSL certificate verification errors in bundled app\n- Daily briefings and other reports now work correctly",
+  "release_notes": "- Improved Sentry error capture with full stack traces\n- Fixed auto-update quarantine issue",
   "min_version": "1.0.0",
-  "published_at": "2026-01-22T18:31:23Z"
+  "published_at": "2026-01-22T18:53:27Z"
 }
