@@ -1,8 +1,8 @@
 {
   "version": "1.2.0",
-  "build": 36,
+  "build": 37,
   "download_url": "https://dayprism.com/releases/DayPrism-Dev-1.2.0.dmg",
-  "release_notes": "- Fixed HTML content in Gmail snippets\n- Priorities now require evidence references\n- Fixed user attribution in Awaiting tables\n- Improved evidence deduplication",
+  "release_notes": "V4 Briefing Quality Fixes:\n- Atomic evidence units for better topic relevance\n- User identity awareness (no self-referential actions)\n- Counterparty attribution in actions\n- Timestamp-aware priority filtering\n- Improved error tracking and notifications",
   "min_version": "1.0.0",
-  "published_at": "2026-01-27T13:03:16Z"
+  "published_at": "2026-01-28T06:59:23Z"
 }
