@@ -1,8 +1,8 @@
 {
   "version": "1.2.0",
-  "build": 37,
+  "build": 40,
   "download_url": "https://dayprism.com/releases/DayPrism-Dev-1.2.0.dmg",
-  "release_notes": "V4 Briefing Quality Fixes:\n- Atomic evidence units for better topic relevance\n- User identity awareness (no self-referential actions)\n- Counterparty attribution in actions\n- Timestamp-aware priority filtering\n- Improved error tracking and notifications",
+  "release_notes": "V4 Briefing Quality Fixes:\n- Atomic evidence units for better topic relevance\n- User identity awareness (no self-referential actions)\n- Counterparty attribution in actions\n- Timestamp-aware priority filtering\n- Fixed DOMPurify path for build",
   "min_version": "1.0.0",
-  "published_at": "2026-01-28T06:59:23Z"
+  "published_at": "2026-01-28T09:28:45Z"
 }
